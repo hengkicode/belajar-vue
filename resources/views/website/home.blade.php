@@ -21,14 +21,18 @@
 
             @foreach ($pages as $page)
 
-            <li class="nav-item">
-            <a class="nav-link" href="/page/{{ $page->id }}">{{ $page->name }}</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/page/{{ $page->id }}">{{ $page->name }}</a>
+                </li>
             @endforeach
+
+            <li class="nav-item">
+                <a class="nav-link" href="/conctact-us">Contact US</a>
+            </li>
 
     </nav>
 
-    <div> 
+    <div>
         {{ $pageDetail->decription }}
     </div>
 

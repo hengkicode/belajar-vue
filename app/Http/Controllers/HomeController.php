@@ -21,7 +21,7 @@ class HomeController extends Controller
 
         $pages = Page::All();
 
-        $pageDetail = Page::where($pageId);
+        $pageDetail = Page::find($pageId);
 
         return view('website.home', ['pages' => $pages, 'pageDetail' => $pageDetail ]);
     }
