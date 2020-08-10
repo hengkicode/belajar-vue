@@ -13,14 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/page/about-us/{hello}', function () {
     echo 'coba link nya koneksi gak';
 });
 
 Route::get('test1', 'TestController@test1');
+
+Route::get('/','HomeController@index');
+
+Route::get('/page/{id}','HomeController@page');
 
 
