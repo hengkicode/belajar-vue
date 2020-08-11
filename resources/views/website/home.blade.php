@@ -27,7 +27,7 @@
             @endforeach
 
             <li class="nav-item">
-                <a class="nav-link" href="/conctact-us">Contact US</a>
+                <a class="nav-link" href="/contact-us">Contact US</a>
             </li>
 
     </nav>

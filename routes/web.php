@@ -28,5 +28,5 @@ Route::get('/','HomeController@index');
 Route::get('/page/{id}','HomeController@page');
 
 Route::get('contact-us', 'ContactusController@index');
-
+Route::post('contact-us/sendmessage', 'ContactusController@sendMessage');
 
