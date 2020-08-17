@@ -41,4 +41,10 @@ class ContactusController extends Controller
         return view('website.contact', ['pages' => $pages ])->with('succesMessage', 'Thank you, your message has been sent!') ;
         // dd($input);
     }
+
+    public function sendMessageAjax(Request $request){
+        $input = $request->all();
+
+        dd($input);
+    }
 }

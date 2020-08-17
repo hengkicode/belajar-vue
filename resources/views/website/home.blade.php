@@ -33,7 +33,8 @@
     </nav>
 
     <div>
-        {{ $pageDetail->decription }}
+        {{ $pageDetail->description }}
+        
     </div>
 
 </body>

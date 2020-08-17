@@ -17,16 +17,18 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/page/about-us/{hello}', function () {
-    echo 'coba link nya koneksi gak';
-});
+// Route::get('/page/about-us/{hello}', function () {
+//     echo 'coba link nya koneksi gak';
+// });
 
-Route::get('test1', 'TestController@test1');
+// Route::get('test1', 'TestController@test1');
 
 Route::get('/','HomeController@index');
 
 Route::get('/page/{id}','HomeController@page');
 
 Route::get('contact-us', 'ContactusController@index');
-Route::post('contact-us/sendmessage', 'ContactusController@sendMessage');
 
+// Route::post('contact-us/sendmessage', 'ContactusController@sendMessage');
+
+Route::post('contact-us/sendmessage/ajax', 'ContactusController@sendMessageAjax');
