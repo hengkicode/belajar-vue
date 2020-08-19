@@ -1934,15 +1934,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       loaded: false,
+      formSending: false,
       name: null,
+      email: null,
+      message: null,
       buttonText: 'Click me change text'
     };
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {},
+  methods: {
+    sendMessage: function sendMessage(e) {
+      e.preventDefault();
+      var self = this;
+      self.formSending = true;
+      vue.axios.post('/contact-us/sendmessage/ajax', {
+        name: self.name,
+        email: self.email,
+        message: self.message
+      }).then(function (response) {
+        // alert('thank you !! yout message hasbeen sent!');
+        alert(response.data.message);
+        self.formSending = false;
+        self.name = null;
+        self.email = null;
+        self.message = null;
+      })["catch"](function (error) {
+        alert('sorryfailed');
+        console.log(error);
+        self.formSending = false;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -19580,6 +19607,19 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-axios/dist/vue-axios.min.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue-axios/dist/vue-axios.min.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(o){return typeof o}:function(o){return o&&"function"==typeof Symbol&&o.constructor===Symbol&&o!==Symbol.prototype?"symbol":typeof o};!function(){function o(e,t){if(!o.installed){if(o.installed=!0,!t)return void console.error("You have to install axios");e.axios=t,Object.defineProperties(e.prototype,{axios:{get:function(){return t}},$http:{get:function(){return t}}})}}"object"==( false?undefined:_typeof(exports))?module.exports=o: true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function(){return o}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined}();
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ContactForm.vue?vue&type=template&id=76db242e&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ContactForm.vue?vue&type=template&id=76db242e& ***!
@@ -19598,10 +19638,7 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c(
       "form",
-      {
-        staticClass: "was-validated",
-        attrs: { method: "post", action: "/contact-us/sendmessage" }
-      },
+      { staticClass: "was-validated", on: { submit: _vm.sendMessage } },
       [
         _c("div", { staticClass: "form-group" }, [
           _c("label", { attrs: { for: "pwd" } }, [_vm._v("Name:")]),
@@ -19620,13 +19657,11 @@ var render = function() {
               type: "text",
               id: "uname",
               placeholder: "Enter Your Name",
-              name: "name"
+              name: "name",
+              required: ""
             },
             domProps: { value: _vm.name },
             on: {
-              keyup: function($event) {
-                _vm.buttonText = _vm.name
-              },
               input: function($event) {
                 if ($event.target.composing) {
                   return
@@ -19637,65 +19672,86 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Submit")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "btn btn-primary",
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "pwd" } }, [_vm._v("Email:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.email,
+                expression: "email"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "email",
+              id: "uname",
+              placeholder: "Enter Your Email",
+              name: "email",
+              required: ""
+            },
+            domProps: { value: _vm.email },
             on: {
-              click: function($event) {
-                _vm.buttonText = _vm.name
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.email = $event.target.value
               }
             }
-          },
-          [_vm._v(_vm._s(_vm.buttonText) + " ")]
-        )
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "pwd" } }, [_vm._v("Message:")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.message,
+                expression: "message"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              name: "message",
+              placeholder: "Enter your message",
+              required: ""
+            },
+            domProps: { value: _vm.message },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.message = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _vm.formSending == false
+          ? _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("Submit")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.formSending == true
+          ? _c("div", { staticClass: "btn btn-primary" }, [
+              _vm._v("Sending Message")
+            ])
+          : _vm._e()
       ]
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "pwd" } }, [_vm._v("Email:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "email",
-          id: "uname",
-          placeholder: "Enter Your Email",
-          name: "email"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "pwd" } }, [_vm._v("Message:")]),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "form-control",
-        attrs: { name: "message", placeholder: "Enter your message" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -31969,12 +32025,24 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************!*\
   !*** ./resources/js/website.js ***!
   \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.min.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_2__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_2___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
 vue.component('contact-us-form', __webpack_require__(/*! ./components/ContactForm.vue */ "./resources/js/components/ContactForm.vue")["default"]);
 var app = new vue({
   el: '#app'

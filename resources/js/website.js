@@ -2,9 +2,10 @@ require('./bootstrap');
 
 window.vue = require('vue');
 
+import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
- 
+
 Vue.use(VueAxios, axios)
 
 vue.component('contact-us-form', require('./components/ContactForm.vue').default);
